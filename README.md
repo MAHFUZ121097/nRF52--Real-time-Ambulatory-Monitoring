@@ -38,3 +38,29 @@ The firmware is built using the Nordic nRF5 SDK (version 17.0.2) and integrates 
 - **Timers and Programmable Peripheral Interface (PPI)**: For handling timed SAADC sampling
 - **Direct Memory Access (DMA)**: For storing sensor data efficiently
 - **nRF Logging**: For debugging and logging over UART or RTT
+
+## SAADC
+- Sampling rate 1 kHz
+- Resolution 10 bit
+- Uses timer interrupt (31.25 kHz) based continuous sampling
+
+## Two wire interface (TWI)/ I2C Instance 1
+- Communicates with MPU 6050 sensor
+- Stores 3-axis accelerometer data (gyroscope data can also be saved, if required)
+- Communication speed 100 kHz
+- Automatically clear bus: True
+
+## TWI/ I2C Instance 2
+- Communicates sequentially with MAX30101 and Si7021 sensor respectively
+- Stores infrared (IR) and red LED data and temperature-humidity data
+- Communication speed 100 kHz
+- Automatically clear bus: True
+
+## Important Function definitions
+- saadc_init(): Initializes ADC unit
+- saadc_callback(): At every SAADC event, converts and save (using DMA) 48 analog samples
+- twi_master_init(): Initializes TWI instance 1 for MPU6050 communication
+- MPU6050_ReadAcc(&AccValue[0], &AccValue[1], &AccValue[2]): Reads accelerometer data
+- max30100_init(): Initializes TWI instance 2 for MAX30101 and Si7021 communication
+- max30100_read_sensor_data(&ir_data, &red_data): Reads IR and red LED data
+- si7021_read_sensor_data(&temp_data, &humd_data): Reads temperature and humidity data
