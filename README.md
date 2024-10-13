@@ -64,3 +64,14 @@ The firmware is built using the Nordic nRF5 SDK (version 17.0.2) and integrates 
 - max30100_init(): Initializes TWI instance 2 for MAX30101 and Si7021 communication
 - max30100_read_sensor_data(&ir_data, &red_data): Reads IR and red LED data
 - si7021_read_sensor_data(&temp_data, &humd_data): Reads temperature and humidity data
+
+## BLE Specifications
+- Advertising name: EX_CPS_EIT1
+- Speed: 1 Mbps
+- Baud rate: 115200 kbps
+- Advertising interval: 40 ms
+- Minimum connection interval: 20 ms
+- Maximum connection interval: 50 ms
+- Advertising duration: 180 s (goes to sleep after 3 minutes)
+- BLE packet size: 116 bytes
+- BLE packet organization: ECG samples (96 bytes) | Start byte, Respiration data, End byte (8 bytes) | Start byte, SpO2 data, End byte (6 bytes) | Start byte, Temperature_Humidity data, End byte (6 bytes)
